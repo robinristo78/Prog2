@@ -1,7 +1,6 @@
-
-
 import mysql from 'mysql2';
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Create a connection object with the database configuration
 // host: the database server address
@@ -9,10 +8,10 @@ import mysql from 'mysql2';
 // password: the MySQL password
 // database: the name of the database to connect to
 const conn = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'qwerty',
-    database: 'joga_mysql_oop'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 
 
