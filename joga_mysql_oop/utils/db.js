@@ -1,6 +1,6 @@
 
-// Import the mysql2 library to interact with MySQL databases
-const mysql = require('mysql2');
+
+import mysql from 'mysql2';
 
 
 // Create a connection object with the database configuration
@@ -29,4 +29,4 @@ conn.connect((err) => {
 
 
 // Export the connection object so it can be used in other files
-module.exports = conn;
+export default conn;
