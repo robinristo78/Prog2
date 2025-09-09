@@ -7,10 +7,13 @@ class ArticleModel extends BaseSQLModel {
     super('article');
   }
 
-  async findAll() {
-    return await super.findAll();
-  }
+//   async findAll() {
+//     return await super.findAll();
+//   }
 
+  async findOne(slug) {
+    return await super.findOne('slug', slug);
+  } 
 
 }
 

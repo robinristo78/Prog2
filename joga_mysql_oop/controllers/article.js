@@ -13,6 +13,11 @@ class ArticleController {
         }
     }
 
+    async getArticleBySlug(req, res) {
+        const article = await articleModel.findOne(req.params.slug);
+        res.status(201).json({article: article});
+    } 
+
 }
 
 export const articleController = new ArticleController();
