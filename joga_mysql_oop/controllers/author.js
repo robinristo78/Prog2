@@ -9,11 +9,10 @@ class AuthorController {
         try {
 
             const author = await authorModel.findById(req.params.author_id);
-            console.log(author);
             if (!author) {
                 return res.status(404).json({ error: 'Author not found' });
             }
-            const articles = await articleModel.findMany(author.id);
+            const articles = await articleModel.findMany(author);
             author.articles = articles;
             res.status(201).json(author);
         } catch (err) {
