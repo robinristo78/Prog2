@@ -15,4 +15,9 @@ router.post('/article/create', (req, res) => {
     articleController.createNewArticle(req, res)
 });
 
+// Post edit article
+router.post('/article/edit/:id', (req, res) => {
+    articleController.updateArticle(req, res)
+});
+
 export default router;
