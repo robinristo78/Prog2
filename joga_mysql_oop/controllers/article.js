@@ -57,21 +57,26 @@ class ArticleController {
                 author_id: req.body.author_id
             };
 
-            //write code here to update article in database based on 'async update(id, data) {
-            //     const query = `UPDATE ${this.tableName} SET ? WHERE id = ?`;
-            //     const result = await this.executeQuery(query, [data, id]);
-            //     return result.affectedRows;
-            //   }' method in baseSQLModel.js file'
             const affectedRows = await articleModel.update(articleId, updatedArticle);
 
             res.status(201).json({updatedArticle: {id: articleId, ...updatedArticle}});
-            
 
-        } catch (err) {
-            res.status(500).json({ error: err.message });
-        }
 
-    }
+            } catch (err) {
+                res.status(500).json({ error: err.message });
+            }
+        };
+
+        async deleteArticle(req, res) {
+            try {
+                const articleId = req.params.id;
+                const affectedRows = await articleModel.delete(articleId);
+                res.status(201).json({message: `Article with id ${articleId} deleted successfully.`});
+            } catch (err) {
+                res.status(500).json({ error: err.message });
+            }
+        };
+
 }
 
 export const articleController = new ArticleController();

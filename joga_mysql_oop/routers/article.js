@@ -20,4 +20,9 @@ router.post('/article/edit/:id', (req, res) => {
     articleController.updateArticle(req, res)
 });
 
+// Delete article
+router.delete('/article/delete/:id', (req, res) => {
+    articleController.deleteArticle(req, res)
+});
+
 export default router;
