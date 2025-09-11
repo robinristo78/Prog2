@@ -10,4 +10,9 @@ router.get('/', (req, res) => {
 
 router.get('/article/:slug', (req, res) => articleController.getArticleBySlug(req, res));
 
+// Post create new article
+router.post('/article/create', (req, res) => {
+    articleController.createNewArticle(req, res)
+});
+
 export default router;

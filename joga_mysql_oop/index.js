@@ -6,8 +6,11 @@ import articleRouter from './routers/article.js';
 import authorRouter from './routers/author.js';
 
 const app = express();
-const PORT = 3000;
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+const PORT = 3000;
 
 // Use the article router for routes starting with /articles
 app.use('/', articleRouter);
