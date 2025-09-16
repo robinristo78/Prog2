@@ -79,4 +79,4 @@ class ArticleController {
 
 }
 
-export const articleController = new ArticleController();
+export default new ArticleController();

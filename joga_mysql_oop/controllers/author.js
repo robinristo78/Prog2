@@ -21,4 +21,4 @@ class AuthorController {
     }
 }
 
-export const authorController = new AuthorController();
+export default new AuthorController();
