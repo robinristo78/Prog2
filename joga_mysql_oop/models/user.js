@@ -6,7 +6,7 @@ class UserModel extends BaseSQLModel {
         super('users');
       }
 
-    async findUser(username) {
+    async findOne(username) {
         return await super.findOne('username', username);
     }  
 }

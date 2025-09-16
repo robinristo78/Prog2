@@ -6,6 +6,7 @@ const userModel = new UserDbModel();
 
 class UserController {
 
+    // Register new user
     async register(req, res) {
         //check if password length is not empty and is at least 6 characters long
         if (req.body.password.length < 6) {
@@ -18,7 +19,7 @@ class UserController {
         const cryptPassword = await bcrypt.hash(req.body.password, 10);
         
         //query database to check if the username is already registered
-        const existingUser = await userModel.findUser(req.body.username);
+        const existingUser = await userModel.findOne(req.body.username);
 
         if (existingUser) {
             return res.status(400).json({ message: "Username already taken" });
@@ -41,6 +42,29 @@ class UserController {
                 user_session: req.session.user
             })
         }
+    }
+
+    // Login user
+    async login(req, res) {
+        const userData = await userModel.findOne(req.body.username);
+        if (!userData) {
+            return res.status(400).json({ message: "Invalid username" });
+        }
+
+        const passwordMatch = await bcrypt.compare(req.body.password, userData.password);
+        if (!passwordMatch) {
+            return res.status(400).json({ message: "Invalid password" });
+        }
+
+        req.session.user = {
+            username: userData.username,
+            user_id: userData.id
+        };
+
+        res.json({
+            message: "User logged in",
+            user_session: req.session.user
+        });
     }
 }
 
