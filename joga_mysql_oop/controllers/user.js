@@ -25,17 +25,21 @@ class UserController {
             return res.status(400).json({ message: "Username already taken" });
         }
 
+        // users table changes: ALTER TABLE users ADD COLUMN role VARCHAR(20) NOT NULL DEFAULT 'user';
+
         const registeredId = await userModel.create({
             username: req.body.username,
             email: req.body.email,
-            password: cryptPassword
+            password: cryptPassword,
+            role: req.body.role || 'user'
         });
 
         if (registeredId) {
             const userData = await userModel.findById(registeredId);
             req.session.user = {
                 username: userData.username,
-                user_id: userData.id
+                user_id: userData.id,
+                role: userData.role
             };
             res.json({
                 message: "New user is registered",
@@ -58,7 +62,8 @@ class UserController {
 
         req.session.user = {
             username: userData.username,
-            user_id: userData.id
+            user_id: userData.id,
+            role: userData.role
         };
 
         res.json({
