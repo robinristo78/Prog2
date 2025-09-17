@@ -6,7 +6,7 @@
   {{#each articles}}
     <article>
       <a href="/admin/article/{{this.slug}}">{{this.name}}</a>
-      <form action="/admin/article/delete/{{this.id}}" method="POST" style="display: inline;">
+      <form action="/admin/article/delete/{{this.id}}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this article?');">
         <button type="submit">Delete</button>
       </form>
       <a style="display: inline; text-decoration: none;" class="btn-primary" href="/admin/article/edit/{{this.id}}">Edit</a>
