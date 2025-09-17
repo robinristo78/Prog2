@@ -6,6 +6,15 @@ const userModel = new UserDbModel();
 
 class UserController {
 
+    async getAllUsers(req, res) {
+        try {
+            const users = await userModel.findAll();
+            res.json(users);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    }
+
     // Register new user
     async register(req, res) {
         //check if password length is not empty and is at least 6 characters long
@@ -68,6 +77,57 @@ class UserController {
 
         res.json({
             message: "User logged in",
+            user_session: req.session.user
+        });
+    }
+
+    async user1Login(req, res) {
+        const userData = await userModel.findOne('user1');
+        if (!userData) {
+            return res.status(400).json({ message: "Invalid username" });
+        }
+
+        const passwordMatch = await bcrypt.compare('qwerty', userData.password);
+        if (!passwordMatch) {
+            return res.status(400).json({ message: "Invalid password" });
+        }
+
+        req.session.user = {
+            username: userData.username,
+            user_id: userData.id,
+            role: userData.role
+        };
+
+        res.json({
+            message: "User logged in",
+            user_session: req.session.user
+        });
+    }
+
+    // "wololo" - convert a user's role into admin or user. checks their current role and changes it to the other one.
+    async wololo(req, res) {
+        const userData = await userModel.findOne(req.body.username);
+        if (!userData) {
+            return res.status(400).json({ message: "User does not exist!" });
+        }
+
+        let role;
+        if (userData.role === 'admin') {
+            role = 'user';
+        } else {
+            role = 'admin';
+        }
+
+        const user = await userModel.update(userData.id, { role: role });
+
+        req.session.user = {
+            username: userData.username,
+            user_id: userData.id,
+            role: role
+        };
+
+        res.json({
+            message: "User role changed to: " + role,
             user_session: req.session.user
         });
     }

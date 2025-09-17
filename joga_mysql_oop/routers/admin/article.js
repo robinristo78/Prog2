@@ -2,6 +2,14 @@ import express from 'express';
 import adminArticleController from '../../controllers/admin/article.js';
 const router = express.Router();
 
+// give admin view only if user session exists and user is admin
+router.use((req, res, next) => {
+    if (req.session.user && req.session.user.role === 'admin') {
+        next();
+    } else {
+        res.status(403).send('Access denied. Admins only.');
+    }
+});
 // Get all articles (admin list)
 router.get('/', (req, res) => adminArticleController.getAllArticles(req, res));
 
