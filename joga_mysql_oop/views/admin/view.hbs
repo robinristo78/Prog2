@@ -6,10 +6,10 @@
   {{#each articles}}
     <article>
       <a href="/admin/article/{{this.slug}}">{{this.name}}</a>
-      <form action="/admin/article/delete/{{this.id}}" method="POST" style="display:inline">
+      <form action="/admin/article/delete/{{this.id}}" method="POST" style="display: inline;">
         <button type="submit">Delete</button>
       </form>
-      <a href="/admin/article/update/{{this.id}}">Edit</a>
+      <a style="display: inline; text-decoration: none;" class="btn-primary" href="/admin/article/edit/{{this.id}}">Edit</a>
     </article> 
   {{/each}}
 </ul>

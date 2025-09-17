@@ -33,7 +33,7 @@ body {
     margin: 0;
 }
 
-form button {
+form button, .btn-primary {
     background-color: #3D518C;
     border: #3D518C 1px solid;
     border-radius: 0;
