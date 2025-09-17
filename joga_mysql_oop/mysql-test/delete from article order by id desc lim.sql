@@ -1,0 +1,1 @@
+delete from article order by id desc limit 1;
