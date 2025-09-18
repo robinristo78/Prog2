@@ -1,13 +1,21 @@
 const express = require('express');
+const dotenv = require('dotenv');
 const app = express();
 
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize('mysql://root:qwerty@localhost:3306/joga_sequelize');
+dotenv.config();
 
+// Import sequelize library and connect to the database
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    dialect: 'mysql'
+});
+
+// Test the database connection
 sequelize.authenticate().then(() => {
    console.log('Connected to the database.');
 }).catch(err => {
