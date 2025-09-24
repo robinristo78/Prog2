@@ -27,8 +27,10 @@ sequelize.authenticate().then(() => {
 //     res.json({ message: 'Hello, World!' });
 // });
 
+// Article routes
 const articleRouter = require('./routes/article');
 app.use('/', articleRouter);
+app.use('/article', articleRouter);
 
 const PORT = 3000;
 app.listen(PORT, () => {
