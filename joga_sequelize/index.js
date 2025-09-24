@@ -32,6 +32,11 @@ const articleRouter = require('./routes/article');
 app.use('/', articleRouter);
 app.use('/article', articleRouter);
 
+// Author routes
+const authorsRouter = require('./routes/authors');
+app.use('/', authorsRouter);
+app.use('/author', authorsRouter);
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
