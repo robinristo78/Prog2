@@ -1,10 +1,28 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const { engine } = require('express-handlebars');
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+const Handlebars = require('handlebars');
+
 
 const app = express();
 
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
+
+
+app.engine(
+    'hbs',
+    engine({
+        extname: '.hbs',
+        handlebars: allowInsecurePrototypeAccess(Handlebars), // Enable prototype access
+        helpers: {
+            eq: (a, b) => a === b,
+        },
+    })
+);
+app.set('view engine', 'hbs');
+app.set('views', __dirname + '/views');
 
 
 const dotenv = require('dotenv');
@@ -38,6 +56,8 @@ const authorsRouter = require('./routes/authors');
 app.use('/', authorsRouter);
 app.use('/author', authorsRouter);
 
+
+//...help me use bodyParser and .hbs (include npm install) to ...
 
 const PORT = 3000;
 app.listen(PORT, () => {
