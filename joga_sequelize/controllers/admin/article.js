@@ -69,7 +69,25 @@ const updateArticle = async (req, res) => {
     }
 };
 
+const deleteArticle = async (req, res) => {
+    const articleId = req.params.id;
+
+    try {
+        // Kustuta artikkel vastava ID-ga
+        const deleted = await models.Article.destroy({ where: { id: articleId } });
+
+        if (deleted) {
+            res.json({ message: 'Article deleted successfully' });
+        } else {
+            res.status(404).json({ message: 'Article not found' });
+        }
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+};
+
 module.exports = {
     createArticle,
-    updateArticle
+    updateArticle,
+    deleteArticle,
 };

@@ -11,4 +11,6 @@ router.post('/admin/article/create', adminArticleController.createArticle);
 router.get('/admin/article/edit/:id', adminArticleController.updateArticle);
 router.post('/admin/article/edit/:id', adminArticleController.updateArticle);
 
+router.post('/admin/article/delete/:id', adminArticleController.deleteArticle);
+
 module.exports = router;
