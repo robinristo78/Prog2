@@ -26,7 +26,7 @@ module.exports = {
       image: 'morning.jpg',
       body: 'This is the body of the second article.',
       published: "2020-04-14 15:02:41",
-      author_id: 2
+      author_id: 3
     }]),
     queryInterface.bulkInsert('Articles', [{
       name: 'Secrets of a yoga teacher  ',
@@ -34,7 +34,7 @@ module.exports = {
       image: 'yoga-teacher.jpg',
       body: 'This is the body of the third article.',
       published: "2020-05-28 15:02:55",
-      author_id: 3
+      author_id: 1
     }])
   },
 
