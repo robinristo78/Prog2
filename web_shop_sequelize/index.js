@@ -12,13 +12,19 @@ const sequelize = require('./util/db');
 const models = require('./models/index');
 sequelize.models = models;
 
-app.use((req, res, next) => {
-    models.User.findByPk(1)
-        .then(user => {
-            req.user = user;
-            next();
-        })
-        .catch(err => console.error(err));
+app.use(async (req, res, next) => {
+    try {
+        let user = await models.User.findByPk(1);
+        if (!user) {
+            user = await models.User.create({ name: 'user', email: 'user@local.com' });
+            await user.createCart();
+        }
+        req.user = user;
+        next();
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to initialize user' });
+    }
 });
 
 const productAdminRoutes = require('./routes/admin/products');
@@ -36,19 +42,7 @@ app.use(orderRoutes);
 sequelize
     .sync({ force: true })
     .then(() => {
-        return models.User.findByPk(1);
-    })
-    .then(user => {
-        if (!user) {
-            return models.User.create({ name: 'user', email: 'user@local.com'});
-        }
-        return user;
-    })
-    .then((user) => {
-        return user.createCart();
-    })
-    .then((cart) => {
-        console.log(cart);
+        console.log('Sequelize loaded.');
         app.listen(PORT);
     })
     .catch((err) => {
