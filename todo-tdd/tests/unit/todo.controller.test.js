@@ -15,7 +15,7 @@ function lastTodoId(res) {
     try {
         return res.body[res.body.length - 1]._id;
     } catch (error) {
-        return undefined;
+        return null;
     }
 }
 
