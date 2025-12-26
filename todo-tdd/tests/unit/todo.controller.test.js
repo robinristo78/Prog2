@@ -12,8 +12,6 @@ beforeEach(() => {
     next = null;
 });
 
-
-
 describe('TodoController.createTodo', () => {
     beforeEach(() => {
         req.body = newTodo;
