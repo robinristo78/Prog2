@@ -72,4 +72,22 @@ describe(endpointUrl, () => {
             .send(testData);
         expect(res.statusCode).toBe(404);
     });
+
+    it('DELETE ' + endpointUrl + ":todoId", async () => {
+        const response = await request(app)
+            .delete(endpointUrl + firstTodo._id)
+            .send();
+        expect(response.statusCode).toBe(200);
+        expect(response.body.title).toBe(testData.title);
+    });
+
+    it("DELETE 404 " + endpointUrl + ":todoId", async () => {
+        const testUrl = endpointUrl + notExistingTodoId;
+
+        const response = await request(app)
+            .delete(testUrl)
+            .send();
+        
+        expect(response.statusCode).toBe(404);
+    });
 });
